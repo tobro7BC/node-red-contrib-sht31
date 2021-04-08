@@ -1,0 +1,35 @@
+{
+  "name": "node-red-contrib-sht31",
+  "version": "0.0.1",
+  "description": "Node for SHT31 sensors for SBCs gpios",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/belveder79/node-red-contrib-sht31.git"
+  },
+  "keywords": [
+    "node-red",
+    "rpi",
+    "raspberry",
+    "Beaglebone",
+    "orangepi",
+    "BBB",
+    "Edison",
+    "sensor",
+    "sensors",
+    "temperature",
+    "humidity"
+  ],
+  "node-red": {
+    "nodes": {
+      "SHT31": "sht31.js"
+    }
+  },
+  "author": "Clemens Arth",
+  "license": "MIT",
+  "dependencies": {
+    "sht31-sensor": "^0.0.3"
+  }
+}
