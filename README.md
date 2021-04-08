@@ -34,10 +34,10 @@ After installation place your Sht31 node in any of your flow and configure the f
 
 1. __Name:__ Select the name of your sensor for easy identification.
 2. __Bus ID:__ Select the I2C bus to which the sensor is connected. Depending on your wiring and SBC can be different.
-3. __I2C address:__ I2C address (7-bit) hexdecimal address(0x##). BMP/BME280 sensor have fixed 0x77 or 0x76. You can check your sensor id by using i2c-tools typing ``i2cdetect -y <busnum>``
+3. __I2C address:__ I2C address (7-bit) hexdecimal address(0x##). SHT31 sensor has fixed 0x44 or 0x45. You can check your sensor id by using i2c-tools typing ``i2cdetect -y <busnum>``
 4. __Topic:__ Topic field set on the output message. If this field is empty, topic will not be included in the output msg. By configuring the node this way input msg topic will be reused.
 
-After configuration and deployment the node will init the sensor and will identify if BME280 or BMP280 variant is detected.  
+After configuration and deployment the node will init the sensor. *A word of warning! Since the SHT31 does not expose anything like product id at this point in time, the init function does nothing but returning a fake ID. So you don't really know if the sensor is actually there or not. If it gives you no answer, it might not be there, although it shows up as "initialized".*
 
 ### Reading Sensor Data
 As in other node-red nodes the actual measurement of sensor data require that an input msg arrive to the node. The input called __Trigger__ will start the reading of sensor data will send the data in the node's output. The input __msg is reused__ so any property on the input msg (with the exception of payload and topic if set) will be redirected without modification to the output.
@@ -49,29 +49,16 @@ msg = {
   _msgid: <node-red msg_id>,
   topic: <defined topic>,
   payload: {
-    model: "BME280"  or  "BMP280",
+    model: "SHT31",
     temperature_C: <float in celsius>,
-    humidity: <float in %>, // Only present if model == "BME280"
-    pressure_hPa: <float in hPa>
+    humidity: <float in %>
   }
 }
-
-// the node node is configured to send extra information payload will contain also
-
-payload: {
-     ....
-     heatIndex: <float in celsius>, // Only present if model == "BME280"
-     dewPoint_C= <float in celsius>, // Only present if model == "BME280"
-     altitude_M= <float in Meters>,
-     temperature_F=<float in fahrenheit>
-     pressure_Hg=<float in mm of mercury>
-}
-
 ```
 
 ## Disclaimer
 
-A lot of code snippets, inspiration and even this README was largely taken from the [contrib module](https://github.com/ludiazv/node-red-contrib-bme280) implementation from @ludiazv (actually almost everything). The node was only tested on a RockPro64 board and a custom SHT31 sensor implementation from [AR4 GmbH](https://www.ar4.io).
+A lot of code snippets, inspiration and even this README was largely taken from the [BME280 contrib module](https://github.com/ludiazv/node-red-contrib-bme280) implementation from @ludiazv (actually almost everything). The node was only tested on a RockPro64 board and a custom SHT31 sensor implementation from [AR4 GmbH](https://www.ar4.io).
 
 ## Change log
 
